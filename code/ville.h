@@ -5,6 +5,8 @@ typedef struct Ville_t Ville;
 
 Ville *creer_ville(char *nom, int x, int y);
 
+void detruit_ville(Ville *ville);
+
 int get_x_ville(Ville *ville);
 
 int get_y_ville(Ville *ville);
