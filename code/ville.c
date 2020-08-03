@@ -13,6 +13,8 @@ struct Ville_t{
 
 Ville *creer_ville(char *nom, int x, int y){
     Ville *ville = malloc(sizeof(Ville));
+    if(ville==NULL)
+        return NULL;
     ville->nom = nom;
     ville->x = x;
     ville->y = y;
@@ -57,4 +59,8 @@ void set_specialite_ville(Ville *ville, char *specialite){
 
 double distance_entre_2_villes(Ville *ville1, Ville *ville2){
     return sqrt(pow(ville2->x - ville1->x, 2) + pow(ville2->y - ville1->y, 2));
+}
+
+int size_ville(void){
+    return sizeof(Ville);
 }

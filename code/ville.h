@@ -19,4 +19,6 @@ void set_specialite_ville(Ville *ville, char *specialite);
 
 double distance_entre_2_villes(Ville *ville1, Ville *ville2);
 
+int size_ville(void);
+
 #endif

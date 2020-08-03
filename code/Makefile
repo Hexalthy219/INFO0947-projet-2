@@ -29,10 +29,10 @@ EXEC = $(EXEC_TABLEAU) $(EXEC_LISTE)
 
 #"Evitez le franglais!" MDR
 test_array: $(OBJECTS_TABLEAU)
-	$(LD) -o $(EXEC_TABLEAU) $(OBJECTS_TABLEAU) $(LDFLAGS)
+	$(LD) -o $(EXEC_TABLEAU) $(OBJECTS_TABLEAU) $(LDFLAGS) -lm
 
 test_list: $(OBJECTS_LISTE)
-	$(LD) -o $(EXEC_LISTE) $(OBJECTS_LISTE) $(LDFLAGS)
+	$(LD) -o $(EXEC_LISTE) $(OBJECTS_LISTE) $(LDFLAGS) -lm
 
 
 ville.o: ville.c
