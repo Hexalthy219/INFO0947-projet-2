@@ -27,7 +27,6 @@ EXEC = $(EXEC_TABLEAU) $(EXEC_LISTE)
 
 #compilation
 
-#"Evitez le franglais!" MDR
 test_array: $(OBJECTS_TABLEAU)
 	$(LD) -o $(EXEC_TABLEAU) $(OBJECTS_TABLEAU) $(LDFLAGS) -lm
 
