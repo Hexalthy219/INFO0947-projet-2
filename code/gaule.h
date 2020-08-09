@@ -1,6 +1,7 @@
 #ifndef _GAULE_
 #define _GAULE_
 
+typedef struct Cellule_Gaule_t Cellule_Gaule;
 
 typedef struct Gaule_t Gaule;
 
@@ -22,6 +23,6 @@ void maj_est_circuit(Gaule *tour);
 
 int get_est_circuit(Gaule *tour);
 
-int nombre_specialites(Gaule *tour);
+int get_nombre_specialites(Gaule *tour);
 
 #endif

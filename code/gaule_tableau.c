@@ -12,7 +12,7 @@ struct Gaule_t{
     int nombre_specialites;
 };
 
-Gaule *cree_nouveau_tour(Ville *ville1, Ville *ville2) {
+Gaule *cree_nouveau_tour(Ville *ville1, Ville *ville2){
     assert(ville1!=NULL && ville2!=NULL && (compare_string(get_nom_ville(ville1), get_nom_ville(ville2))!=0));
     
     Gaule *tour_gaule = malloc(sizeof(Gaule));
@@ -63,8 +63,6 @@ int get_nombre_villes(Gaule *tour){
     return tour->nombre_villes;
 }
 
-
-
 int ajoute_ville(Gaule *tour, Ville *ville){
     assert(tour!=NULL && ville!=NULL);
 
@@ -112,7 +110,7 @@ void supprime_ville(Gaule *tour){
 int compare_string(char *chaine1, char *chaine2){
     int i=0;
     while(chaine1[i]!=0){
-        if (chaine2[i] == 0 || (chaine1[i] != chaine2[i]))
+        if (chaine2[i]==0 || (chaine1[i]!=chaine2[i]))
             return -1;
     i++;
     }
@@ -124,15 +122,9 @@ int compare_string(char *chaine1, char *chaine2){
 void maj_est_circuit(Gaule *tour){
     assert(tour!=NULL);
 
-    if(tour->nombre_villes<=2){
-        tour->est_circuit = 0;
+    tour->est_circuit = 0;
+    if(tour->nombre_villes<=2 || compare_string(get_nom_ville(tour->tableau_ville[0]),get_nom_ville(tour->tableau_ville[get_nombre_villes(tour)-1])))
         return;
-    }
-
-    if(compare_string(get_nom_ville(tour->tableau_ville[0]),get_nom_ville(tour->tableau_ville[get_nombre_villes(tour)-1]))==-1){
-        tour->est_circuit = 0;
-        return;
-    }
 
     tour->est_circuit = 1;
 }
@@ -144,12 +136,8 @@ int get_est_circuit(Gaule *tour){
 }
 
 
-int nombre_specialites(Gaule *tour){
+int get_nombre_specialites(Gaule *tour){
+    assert(tour!=NULL);
+
     return tour->nombre_specialites;
 }
-
-int main(){
-    return 0;
-}
-
-
