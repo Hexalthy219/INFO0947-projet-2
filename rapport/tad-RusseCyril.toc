@@ -1,0 +1,17 @@
+\babel@toc {french}{}
+\contentsline {section}{\numberline {1}\textbf {Introduction}}{3}%
+\contentsline {subsection}{\numberline {1.1}\textbf {Contexte}}{3}%
+\contentsline {subsection}{\numberline {1.2}\textbf {Enoncé}}{3}%
+\contentsline {subsubsection}{\numberline {1.2.1}Types abstraits}{3}%
+\contentsline {subsubsection}{\numberline {1.2.2}Représentation Concrète}{3}%
+\contentsline {section}{\numberline {2}\textbf {Signature des TAD}}{3}%
+\contentsline {subsection}{\numberline {2.1}\textbf {Ville}}{3}%
+\contentsline {subsection}{\numberline {2.2}\textbf {Gaule}}{4}%
+\contentsline {section}{\numberline {3}\textbf {Spécifications des TAD}}{5}%
+\contentsline {subsection}{\numberline {3.1}\textbf {Ville}}{5}%
+\contentsline {subsubsection}{\numberline {3.1.1}Structure}{5}%
+\contentsline {subsubsection}{\numberline {3.1.2}Spécification des fonctions et procédures de ville.h}{5}%
+\contentsline {subsection}{\numberline {3.2}\textbf {Gaule}}{6}%
+\contentsline {subsubsection}{\numberline {3.2.1}Structure en Tableau}{6}%
+\contentsline {subsubsection}{\numberline {3.2.2}Structure en Liste chainée}{6}%
+\contentsline {subsubsection}{\numberline {3.2.3}Spécification des fonctions et procédures gaule.h}{7}%

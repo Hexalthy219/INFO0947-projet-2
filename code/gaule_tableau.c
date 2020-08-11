@@ -141,3 +141,20 @@ int get_nombre_specialites(Gaule *tour){
 
     return tour->nombre_specialites;
 }
+
+char *get_specialite(Gaule *tour, char *nom_ville){
+    assert(tour!=NULL && nom_ville!=NULL);
+
+    char *nom2;
+    int ville_appartient_tour = 0, i = 0;
+    
+    for(; i<get_nombre_villes(tour) && ville_appartient_tour==0; i++){
+        nom2 = get_nom_ville(tour->tableau_ville[i]);
+        if(!compare_string(nom_ville, nom2))
+            ville_appartient_tour=1;
+    }
+    if(!ville_appartient_tour)
+        return NULL;
+    
+    return get_specialite_ville(tour->tableau_ville[i-1]);
+}

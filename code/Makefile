@@ -48,13 +48,13 @@ gaule_liste.o: gaule_liste.c
 rapport:all_rapport clean_log_aux
 
 all_rapport:
-	cd ../rapport && pdflatex rapport_demineur.tex
+	cd ../rapport && pdflatex tad-RusseCyril.tex
 
 clean_log_aux:
-	cd ../rapport && rm -f rapport_demineur.aux rapport_demineur.log rapport_demineur.toc
+	cd ../rapport && rm -f tad-RusseCyril.aux tad-RusseCyril.log tad-RusseCyril.toc
 
 clean_rapport: clean_log_aux
-	cd ../rapport && rm -f rapport_demineur.pdf
+	cd ../rapport && rm -f tad-RusseCyril.pdf
 
 #création archive
 archive:

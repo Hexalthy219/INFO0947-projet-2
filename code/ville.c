@@ -6,12 +6,14 @@
 
 struct Ville_t{
     char *nom;
-    int x;
-    int y;
+    float x;
+    float y;
     char *specialite;
 };
 
-Ville *creer_ville(char *nom, int x, int y){
+Ville *creer_ville(char *nom, float x, float y){
+    assert(nom!=NULL);
+
     Ville *ville = malloc(sizeof(Ville));
     if(ville==NULL)
         return NULL;
@@ -29,13 +31,13 @@ void detruit_ville(Ville *ville){
     }
 }
 
-int get_x_ville(Ville *ville){
+float get_x_ville(Ville *ville){
     assert(ville != NULL);
 
     return ville->x;
 }
 
-int get_y_ville(Ville *ville){
+float get_y_ville(Ville *ville){
     assert(ville != NULL);
 
     return ville->y;
@@ -54,10 +56,13 @@ char *get_specialite_ville(Ville *ville){
 }
 
 void set_specialite_ville(Ville *ville, char *specialite){
+    assert(ville!=NULL && specialite!=NULL);
     ville->specialite = specialite;
 }
 
-double distance_entre_2_villes(Ville *ville1, Ville *ville2){
+float distance_entre_2_villes(Ville *ville1, Ville *ville2){
+    assert(ville1!=NULL && ville2!=NULL);
+
     return sqrt(pow(ville2->x - ville1->x, 2) + pow(ville2->y - ville1->y, 2));
 }
 
