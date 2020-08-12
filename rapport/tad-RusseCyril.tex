@@ -404,20 +404,91 @@ Ces types abstraits doivent être représentés de 2 manières :
 
     /*
     *@pre : (>\color{MidnightBlue}$tour\ne NULL \wedge nom\_ville\ne NULL$<)
-    *@post : (>\color{MidnightBlue}$i$<)
+    *@post : (>\color{MidnightBlue}$\exists V_1\in Ville, get\_nom\_ville(Ville)=nom\_ville\implies get\_specialite(tour, nom\_ville)=$<)
+    *(>\color{MidnightBlue}$get\_specialite\_ville(V_1)$<)
     */
     char *get_specialite(Gaule *tour, char *nom_ville);
+
+    /*
+    *@pre : (>\color{MidnightBlue}$tour\ne NULL \wedge nom\_ville\ne NULL$<)
+    *@post : (>\color{MidnightBlue}$ville\_en\_double(tour, nom\_ville)=1,$<)
+    *(>\color{MidnightBlue}$\exists V_1,V_2 \in Ville, V_1,V_2\subset tour \wedge get\_nom\_ville(V_1)=get\_nom\_ville(V_2)$<)
+    *sinon (>\color{MidnightBlue}$ville\_en\_double(tour, nom\_ville)=0$<)
+    */
+    int ville_en_double(Gaule *tour, char *nom_ville);
 \end{lstlisting}
 
+\subsubsection{Schématisation}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.22]{schéma_liste_chainée.jpeg}
+    \caption{Schéma de la strucutre sous forme de liste chainée}
+\end{figure}
 
+\section{\textbf{Implémentation des structures}}
+\subsection{\textbf{Ville}}
+Le header ville.h est implémenté par le ficher ville.c. Toutes les implémentations des fonctions/procédures 
+sont très simples. En effet, la majorité d'entre elles ne sont que des accesseurs/setteurs et pour les autres 
+il s'agit d'opérations mathématique ou d'allocation de mémoire très simple ayant toutes une complexité d'ordre O(1).
+\subsection{\textbf{Gaule}}
+\subsubsection{Tableau}
+\begin{enumerate}
+    \item accesseurs
+    \\Comme pour ville, certaines fonctions sont uniquement des accesseurs/setteurs 
+    et donc retourne une valeur d'une champ de Gaule. C'est notamment le cas des 
+    fonctions/procédures get\_nombre\_specialites, get\_est\_circuit, get\_nombre\_villes et
+    set\_nombre\_villes pour lesquelles je ne rentrerai donc pas dans les détails. 
+    \item ajoute\_ville
+    \\Cette fonction va s'occuper d'ajouter au tableau de villes, la ville donnée en argument 
+    en s'assurant que celle-ci n'est pas la même que la dernière du tableau. Elle va également 
+    s'occuper de mettre à jour certains champs de la structure Gaule(est\_circuit, nombre\_villes et 
+    nombre\_specialites)
+    \begin{itemize}
+        \item SP1 : Vérification que l'on ne rajoute pas la même ville que la dernière de la liste.
+        \item SP2 : Mise à jour du nombre de ville du tour
+        \item SP3 : Aggrandissement de l'espace mémoire de tableau ville et ajout de la nouvelle ville
+        \item SP4 : Mise à jour du nombre de spécialités et du champ de Gaule permettant de savoir 
+        si le tour est un circuit ou non
+    \end{itemize}
+    \item supprime\_ville
+    \\A l'inverse de ajoute\_ville, cette procédure retire la dernière ville du tableau à
+    qu'il ne soit pas vide.
+    \begin{itemize}
+        \item SP1 : Mise à jour du nombre de spécialités et du nombre de villes
+        \item SP2 : Realloue la mémoire du tableau afin d'en retirer la dernière ville
+        \item SP3 : Mise à jour du champ de Gaule permettant de savoir si le tour est un circuit ou non
+    \end{itemize}
+    \item compare\_string
+    \\Cette fonction permet de savoir si les 2 chaines de caractères données en argument 
+    sont les mêmes. Pour ce faire, on compare tous caractères un à un de la première chaine 
+    avec ceux respectifs de la deuxième.
+    Ce problème va donc parcourir au Maximum l'entièreté de la première chaine de caractères.
+    \\Spécifions pour ce problème $\forall s\in string, \exists i\in Entier, taille(s)=i, s[i-1]=0$
+    \begin{lstlisting}[caption = {Boucle pour comparer les 2 chaines de caractères}]
+    int i=0;
+    (>\textcolor[HTML]{17983b}{\{$Inv: chaine1=chaine1_0\wedge chaine2=chaine2_0\wedge 0\leq i\leq length(chaine1)$\}}<)
+    while(chaine1[i]!=0){
+        (>\textcolor[HTML]{17983b}{\{$Inv\wedge B: chaine1=chaine1_0\wedge chaine2=chaine2_0\wedge 0\leq i<length(chaine1)$\}}<)
+        if (chaine2[i]==0 || (chaine1[i]!=chaine2[i]))
+            return -1;
+        i++;
+    }
+    (>\textcolor[HTML]{17983b}{\{$Inv\wedge \lnot B \implies chaine1=chaine1_0\wedge chaine2=chaine2_0\wedge i=length(chaine1)$\}}<)
+    if(chaine2[i-1]!=0)
+        return -1;
+    return 0;
+    \end{lstlisting}
+    \item maj\_est\_circuit
+    \\Cette procédure redéfinit le booléen du champ est\_circuit de Gaule. Dans le cas où le tour contient
+    au moins 3 villes, elle compare le nom de la première et dernière ville. Le tour est un circuit s'ils 
+    correspondent.
+    \item get\_specialite
+    \\Cette fonction retourne la specialite de la ville dont le nom a été donné en argument. 
+    \begin{itemize}
+        \item 
+    \end{itemize}
 
-
-
-
-
-
-
-
+\end{enumerate}
 
 
 

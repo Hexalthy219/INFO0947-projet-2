@@ -109,7 +109,7 @@ int compare_string(char *chaine1, char *chaine2){
     while(chaine1[i]!=0){
         if (chaine2[i]==0 || (chaine1[i]!=chaine2[i]))
             return -1;
-    i++;
+        i++;
     }
     if(chaine2[i-1]!=0)
         return -1;
