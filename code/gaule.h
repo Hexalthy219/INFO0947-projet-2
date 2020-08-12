@@ -27,4 +27,6 @@ int get_nombre_specialites(Gaule *tour);
 
 char *get_specialite(Gaule *tour, char *nom_ville);
 
+int ville_en_double(Gaule *tour, char *nom_ville);
+
 #endif

@@ -66,11 +66,10 @@ int get_nombre_villes(Gaule *tour){
 int ajoute_ville(Gaule *tour, Ville *ville){
     assert(tour!=NULL && ville!=NULL);
 
-    char *nom1, *nom2=get_nom_ville(ville);
-    int ville_en_double=0;
+    char *nom=get_nom_ville(ville);
 
     //Vérifie que la ville à ajouter est différente de la dernière du tour
-    if(!(compare_string(get_nom_ville(tour->tableau_ville[get_nombre_villes(tour)-1]), nom2)==-1))
+    if(!(compare_string(get_nom_ville(tour->tableau_ville[get_nombre_villes(tour)-1]), nom)==-1))
         return -1;
 
 
@@ -81,14 +80,7 @@ int ajoute_ville(Gaule *tour, Ville *ville){
 
 
     if(get_specialite_ville(tour->tableau_ville[get_nombre_villes(tour)-1])!=NULL){
-        for(int i=0; i<get_nombre_villes(tour)-1; i++){
-            nom1 = get_nom_ville(tour->tableau_ville[i]);
-            if(compare_string(nom1, nom2)==0){
-                ville_en_double = 1;
-                i=get_nombre_villes(tour);
-            }
-        }
-        if(!ville_en_double)
+        if(!ville_en_double(tour, nom))
             tour->nombre_specialites++;
     }
 
@@ -99,6 +91,11 @@ int ajoute_ville(Gaule *tour, Ville *ville){
 
 void supprime_ville(Gaule *tour){
     assert(tour!=NULL && tour->nombre_villes>0);
+
+    if(get_specialite_ville(tour->tableau_ville[get_nombre_villes(tour)-1])!=NULL){
+        if (!ville_en_double(tour, get_nom_ville(tour->tableau_ville[get_nombre_villes(tour)-1])))
+            tour->nombre_specialites--;
+    }
 
     set_nombre_villes(tour, get_nombre_villes(tour)-1);
     tour->tableau_ville = realloc(tour->tableau_ville, get_nombre_villes(tour)*size_ville());
@@ -148,13 +145,26 @@ char *get_specialite(Gaule *tour, char *nom_ville){
     char *nom2;
     int ville_appartient_tour = 0, i = 0;
     
+    //Vérifie que le nom donné correspond à une des villes du tour
     for(; i<get_nombre_villes(tour) && ville_appartient_tour==0; i++){
         nom2 = get_nom_ville(tour->tableau_ville[i]);
         if(!compare_string(nom_ville, nom2))
-            ville_appartient_tour=1;
+            ville_appartient_tour = 1;
     }
     if(!ville_appartient_tour)
         return NULL;
     
     return get_specialite_ville(tour->tableau_ville[i-1]);
+}
+
+int ville_en_double(Gaule *tour, char *nom_ville){
+    assert(tour!=NULL && nom_ville!=NULL);
+
+    int n_apparition = 0;
+    for(int i = 0; i<get_nombre_villes(tour) && n_apparition<2 ; i++){
+        if(compare_string(get_nom_ville(tour->tableau_ville[i]), nom_ville)==0)
+            n_apparition++;
+    }
+
+    return n_apparition>=2;
 }
