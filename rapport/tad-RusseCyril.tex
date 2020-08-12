@@ -338,7 +338,76 @@ Ces types abstraits doivent être représentés de 2 manières :
 
 \subsubsection{Spécification des fonctions et procédures gaule.h}
 
+\begin{lstlisting}[caption = {Spécification des fonctions et procédures du header "gaule.h"}]
+    /*
+    *@pre : (>\color{MidnightBlue}$ville1=ville1_0\ne NULL \wedge ville2=ville2_0\ne NULL $<)
+    *@post : (>\color{MidnightBlue}$ville1=ville1_0 \wedge ville2=ville2_0\wedge tour_{init}$<)
+    */
+    Gaule *cree_nouveau_tour(Ville *ville1, Ville *ville2);
 
+    /*
+    *@pre : (>\color{MidnightBlue}$\emptyset$<)
+    *@post : (>\color{MidnightBlue}$tour=NULL$<)
+    */
+    void detruit_tour(Gaule *tour);
+
+    /*
+    *@pre : (>\color{MidnightBlue}$tour\ne NULL \wedge nombre\_villes>0$<)
+    *@post : (>\color{MidnightBlue}$get\_nombre\_villes(tour)=nombre\_villes$<)
+    */
+    void set_nombre_villes(Gaule *tour, int nombre_villes);
+
+    /*
+    *@pre : (>\color{MidnightBlue}$tour\ne NULL$<)
+    *@post : (>\color{MidnightBlue}$get\_nombre\_villes = get\_nombre\_villes(tour)$<)
+    */
+    int get_nombre_villes(Gaule *tour);
+
+    /*
+    *@pre : (>\color{MidnightBlue}$tour\ne NULL \wedge ville\ne NULL$<)
+    *@post : (>\color{MidnightBlue}$get\_nombre\_villes(ajoute\_ville(tour, ville)) = get\_nombre\_villes(tour)+1\wedge$<)
+    *ville ajoutée à tour
+    */
+    int ajoute_ville(Gaule *tour, Ville *ville);
+
+    /*
+    *@pre : (>\color{MidnightBlue}$tour\ne NULL \wedge get\_nombre\_villes(tour)>0$<)
+    *@post : dernière ville retirée de tour 
+    *(>\color{MidnightBlue}$\wedge get\_nombre\_villes(tour)=get\_nombre\_villes(tour_0)-1$<)
+    */
+    void supprime_ville(Gaule *tour);
+
+    /*
+    *@pre : (>\color{MidnightBlue}$\emptyset$<)
+    *@post : (>\color{MidnightBlue}$compare_string(chaine1, chaine2)=0 si chaine1=chaine2, -1 sinon$<)
+    */
+    int compare_string(char *chaine1, char *chaine2);
+
+    /*
+    *@pre : (>\color{MidnightBlue}$tour\ne NULL$<)
+    *@post : (>\color{MidnightBlue}$get\_est\_circuit(tour)=1 $<)
+    *si premiere ville et derniere ville de tour sont les mêmes
+    */
+    void maj_est_circuit(Gaule *tour);
+
+    /*
+    *@pre : (>\color{MidnightBlue}$tour\ne NULL$<)
+    *@post : retourne tour->est\_circuit
+    */
+    int get_est_circuit(Gaule *tour);
+
+    /*
+    *@pre : (>\color{MidnightBlue}$tour\ne NULL$<)
+    *@post : retourne tour_>nombre\_specialites
+    */
+    int get_nombre_specialites(Gaule *tour);
+
+    /*
+    *@pre : (>\color{MidnightBlue}$tour\ne NULL \wedge nom\_ville\ne NULL$<)
+    *@post : (>\color{MidnightBlue}$i$<)
+    */
+    char *get_specialite(Gaule *tour, char *nom_ville);
+\end{lstlisting}
 
 
 
