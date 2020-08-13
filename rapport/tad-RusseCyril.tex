@@ -612,7 +612,7 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
     suivante. Notre invariant se traduirait alors comme ceci
     \\$Inv : 1\leq i \leq get\_nombre\_villes(tour)+1$ avec i correspondant à la ième cellule de la liste.
     \item \textbf{ville\_en\_double}
-    \\Cette fonction à pour objectif de définir si la ville donnée en argument apparait plus d’une
+    \\Cette fonction a pour objectif de définir si la ville donnée en argument apparait plus d’une
     fois ou non dans le tour. On parcourt alors le tableau de villes afin d’y dénombrer le nombre
     d’occurance de la ville en question et enfin retourner un booléen correspondant.
     Pour se faire, on parcourt la liste par chaque cellule en partant de la première jusqu'à la fin ou jusqu'à
@@ -625,12 +625,50 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
 \end{enumerate}
 
 \section{\textbf{Complexité}}
+Comme il l'a été précisé dans la section sur l'implémentation de Ville, la complexité des fonctions/procédures 
+de celles-ci sont toutes majorées par O(1). Nous allons dès lors nous intéresser uniquement à celle 
+de Gaule.
+\subsection{Gaule - Tableau}
+\begin{itemize}
+    \item Les fonctions/procédures set\_nombre\_villes, get\_nombre\_villes, get\_est\_circuit et\\ 
+    get\_nombre\_specialites sont toutes composées d'accesseurs/setteurs donc leurs complexités sont 
+    majorées par O(1). Il en va de même pour cree\_nouveau\_tour, detruit\_tour et supprime\_ville qui n'appliquent que 
+    des opérations simples.
+    \item ajoute\_ville : est composée d'opérations simples, appelle des fonctions de complexité majorée par O(1) et fait appel à une fonction pour comparer deux 
+    chaines de caractères. Elle parcourt donc au plus la taille, de la chaine de caractère. Fonction donc majorée par O(N)
+    L'addition de ces complexités nous amène à en conclure une complexité linéaire. 
+    \item compare\_string : si la première chaine donnée en argument fait une taille i alors la fonction 
+    fera au maximum i opérations pour ce qui est du parcourt de la chaine de caractères, incrémenter 
+    des quelques opérations simples nous pouvons en conclure une compléxité majorée par O(N).
+    \item maj\_est\_circuit : est constituée d'opérations simples et fait appelle à une fonction de compléxité 
+    majorée par O(N), l'addition des différentes complexités amène à une complexité majorée par O(N).
+    \item get\_specialite : nous avons à nouveau notre fonction dont la complexité est majorée par O(N) mais elle est cette fois-ci 
+    intégrée dans un autre sous problème qui va effectuer au plus get\_nombre\_villes itérations. Ce sous-problème est 
+    donc lui aussi de complexité linéaire ce qui est implique une complexité linéaire intégré dans une autre, ce qui 
+    implique une complexité majorée par O($N^2$). L'addition des quelques opérations simples n'ont pas d'impact sur 
+    la complexité qui reste quadratique.
+    \item ville\_en\_double : idem que pour get\_specialite
+\end{itemize}
+\subsection{\textbf{Gaule - Liste}}
+Les seules fonctions pour lesquelles la complexité aurait pu être affectée par l'implémentation sous 
+forme de liste aurait été dans le cas d'ajout/retrait de ville pouvant se faire au milieu du tour, 
+hors comme mes fonctions ne permettent que de le faire pour la dernière ville du tour, la totalité 
+des fonctions/procédures ont la même complexité à l'exception des fonctions propres à la version liste 
+analysée ci-dessous.
+\begin{itemize}
+    \item cree\_Cellule\_Gaule : est aussi une fonction composée d'opérations simples donc de complexité 
+    majorée par O(1).
+    \item detruit\_liste : est une fonction récurssive pouvant dans le pire des cas faire appel à elle même 
+    au maximum le nombre de cellule de la liste, donc une complexité linéaire.
+\end{itemize}
+
+\section{\textbf{Seatest}}
 
 \section{\textbf{Avantage et Inconvénients entre liste et tableau}}
 Nous pouvons constater des différences notables entre les deux implémentations.
 
 \paragraph{} Premièrement, il est nettement plus facile d'accéder à un élément du tableau, qui se fait 
-de manière directe, comparé à la liste qui nécessite dans tous les cas de parcourir toutes la liste 
+de manière directe, comparé à la liste qui nécessite dans tous les cas de parcourir toute la liste 
 jusqu'à l'élément recherché.
 
 \paragraph{} Par ailleurs, la liste a pour net avantage la gestion de ses cellules qui permet l'ajout et le retrait 
