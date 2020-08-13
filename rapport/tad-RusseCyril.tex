@@ -443,6 +443,17 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
     \item \textbf{get\_nombre\_villes}
     \item \textbf{set\_nombre\_villes}
     \end{itemize}   
+    \item Allocation de mémoire
+    Une fonction et une procédure permettent l'allocation/libération de mémoire nécessaire à la 
+    création/destruction des structures Gaule : 
+    \begin{itemize}
+        \item cree\_nouveau\_tour : alloue de la mémoire pour un nouveau tour. Cette fonction y crée 
+        un pointeur vers un tableau pouvant contenir deux structures Ville, les deux villes étant données en argument y sont 
+        intégrées si aucun échec d'allocation de mémoire n'a eu lieu. Le nombre de ville est initialisé à 2. 
+        Par définition, le tour ne peut pas être une circuit lorsqu'il est nouvellement créé comme le spécifie l'énoncé. 
+        Le champ est\_circuit est donc initialement nul.
+        \item detruit\_tour : libère la mémoire allouée à une structure Gaule.
+    \end{itemize}
     \item \textbf{ajoute\_ville}
     \\Cette fonction va s'occuper d'ajouter au tableau de villes, la ville donnée en argument 
     en s'assurant que celle-ci n'est pas la même que la dernière du tableau. Elle va également 
@@ -470,7 +481,6 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
     Ce problème va donc parcourir au Maximum l'entièreté de la première chaine de caractères.
     \\Voici le code étant solution de ce problème, agrémenté de son invariant de boucle.
     Spécifions pour ce problème $\forall s\in string, \exists i\in Entier, taille(s)=i, s[i-1]=0$
-    \newpage 
     \begin{lstlisting}[caption = {code comparaison de 2 chaines de caractères}]
     int i=0;
     (>\textcolor[HTML]{17983b}{\{$Inv: chaine1=chaine1_0\wedge chaine2=chaine2_0\wedge 0\leq i\leq length(chaine1)$\}}<)
@@ -558,7 +568,7 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
         \\detruit\_liste(C)=detruit\_liste(C$\rightarrow$cellule\_suivante)+free(C) 
         \\si C$\rightarrow$cellule\_suivante$\ne$NULL
         \\sinon detruit\_liste(C)=free(C)
-        \item \textbf{cree\_nouveau\_tour} : alloue de la mémoire pour un nouveau\_tour. Cette fonction 
+        \item \textbf{cree\_nouveau\_tour} : alloue de la mémoire pour un nouveau tour. Cette fonction 
         fait également appel à cree\_Cellule\_Gaule avant d'intégrer les 2 premières villes du tour 
         données en argument à la liste nouvellement créer et donc permettre d'initialiser les champs 
         du nouveau tour lié à cette liste.
@@ -566,9 +576,73 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
         Elle y libère également la liste incluse à l'aide de la fonction créée à cet effet.
     \end{itemize}
     \item \textbf{ajoute\_ville}
-    
+    \\Cette fonction va ajouter une nouvelle cellule à la fin de la liste de cellule contenue dans le 
+    tour et y mettre à jour certaines champ de tour.
+    \begin{itemize}
+        \item SP1 : Vérification que l’on ne rajoute pas la même ville que la dernière de la liste.
+        \item SP2 : Incrémentation de 1 le champ contenant le nombre de villes du tour
+        \item SP3 : Création d'une nouvelle cellule contenant la nouvelle ville
+        \item SP4 : pointeur de cellule suivante de la cellule précédant la nouvelle cellule et pointeur 
+        de dernière cellule du tour mis à jour
+        \item SP5 : Mise à jour du nombre de spécialités et du champ de Gaule permettant de savoir
+        si le tour est un circuit ou non
+    \end{itemize}
+    \item \textbf{supprime\_ville}
+    \\La dernière cellule de la liste chainée est retirée et libérée à l'aide de cette procédure. Elle met 
+    également à jour les champs du tour nécessitant un changement.
+    \begin{itemize}
+        \item SP1 : Mise à jour du nombre de spécialités et du nombre de villes
+        \item SP2 : Libère la dernière cellule et met à jour le pointeur de dernière cellule du tour
+        sur la cellule précédant l'ancienne dernière.
+        \item SP3 : Mise à jour du champ de Gaule permettant de savoir si le tour est un circuit ou
+        non
+    \end{itemize}
+    \item \textbf{maj\_est\_circuit}
+    \\Cette procédure vérifie, dans le cas où le tour est constitué d'au moins 3 villes, la correspondance 
+    des noms de la première et dernière ville afin de revoyer un booléen correspondant à cette vérification.
+    \item \textbf{get\_specialite}
+    \\Cette fonction renvoit la spécialité de la ville dont le nom est donné en argument.
+    \begin{itemize}
+        \item SP1 : Chercher la ville parmis la liste contenue dans le tour
+        \item SP2 : Renvoyer le nom de la specialite de la ville si elle est trouvée
+    \end{itemize}
+    SP1$\implies$SP2
+    Le SP1 implique l'utilisation d'une boucle où l'on compare le nom de la ville de la cellule 
+    actuelle avec le nom donné. Tant qu'ils ne correspondent pas, notre cellule devient la cellule 
+    suivante. Notre invariant se traduirait alors comme ceci
+    \\$Inv : 1\leq i \leq get\_nombre\_villes(tour)+1$ avec i correspondant à la ième cellule de la liste.
+    \item \textbf{ville\_en\_double}
+    \\Cette fonction à pour objectif de définir si la ville donnée en argument apparait plus d’une
+    fois ou non dans le tour. On parcourt alors le tableau de villes afin d’y dénombrer le nombre
+    d’occurance de la ville en question et enfin retourner un booléen correspondant.
+    Pour se faire, on parcourt la liste par chaque cellule en partant de la première jusqu'à la fin ou jusqu'à
+    avoir au moins trouver deux cellules dont le nom de la ville correspond au nom donné en argument.
+    Elle renvoit alors le booléen correspondant au fait que la ville s'y trouve au moins deux fois ou non.
+    \item \textbf{compare\_string}
+    Cette fonction correspond parfaitement à la fonction de l'implémentation sous forme de tableau. Son 
+    implémentation est donc détaillée dans la section 4.2.1 point 4 et également dans l'Extrait 
+    de Code 6 s'y trouvant.
 \end{enumerate}
 
+\section{\textbf{Complexité}}
 
+\section{\textbf{Avantage et Inconvénients entre liste et tableau}}
+Nous pouvons constater des différences notables entre les deux implémentations.
+
+\paragraph{} Premièrement, il est nettement plus facile d'accéder à un élément du tableau, qui se fait 
+de manière directe, comparé à la liste qui nécessite dans tous les cas de parcourir toutes la liste 
+jusqu'à l'élément recherché.
+
+\paragraph{} Par ailleurs, la liste a pour net avantage la gestion de ses cellules qui permet l'ajout et le retrait 
+d'une ville très facilement comparé au tableau qui, pour se faire, devra impliquer une réallocation de mémoire, 
+telle est la technique que j'ai décidé d'adopter, ou la recréation complete d'un nouveau tableau aux nouvelles dimensions. 
+Dans mon implémentation, j'ai fixé comme règle que l'ajout ou le retrait ne se fait uniquement à la dernière position 
+dans les deux cas, ce qui rend la liste d'autant plus pratique dès lors que je garde en mémoire l'adresse de sa 
+dernière cellule. Si j'avais accordé à l'utilisateur de donner l'indice de l'endroit ou ajouter/retirer un cellule, 
+alors il serait paru comme inconvénients pour la liste de devoir parcourir cette dernière jusqu'à la cellule se trouvant à cet indice.
+
+\paragraph{} Enfin, notons une très légère augmentation de l'espace mémoire nécessaire à une liste dont chacunes 
+de ses cellules contient deux pointeurs supplémentaires. Cette différence ne serait qu'un véritable inconvénients qu'en cas 
+de liste d'une taille très importante.
 
 \end{document}

@@ -21,3 +21,8 @@
 \contentsline {subsection}{\numberline {4.2}\textbf {Gaule}}{9}%
 \contentsline {subsubsection}{\numberline {4.2.1}Tableau}{9}%
 \contentsline {subsubsection}{\numberline {4.2.2}Liste chainée}{11}%
+\contentsline {section}{\numberline {5}\textbf {Complexité}}{12}%
+\contentsline {section}{\numberline {6}\textbf {Avantage et Inconvénients entre liste et tableau}}{12}%
+\contentsline {paragraph}{}{12}%
+\contentsline {paragraph}{}{12}%
+\contentsline {paragraph}{}{13}%
