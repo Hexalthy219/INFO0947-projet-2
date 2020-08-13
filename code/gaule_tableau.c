@@ -148,13 +148,15 @@ char *get_specialite(Gaule *tour, char *nom_ville){
     //Vérifie que le nom donné correspond à une des villes du tour
     for(; i<get_nombre_villes(tour) && ville_appartient_tour==0; i++){
         nom2 = get_nom_ville(tour->tableau_ville[i]);
-        if(!compare_string(nom_ville, nom2))
+        if(!compare_string(nom_ville, nom2)){
             ville_appartient_tour = 1;
+            i--;
+        }
     }
     if(!ville_appartient_tour)
         return NULL;
     
-    return get_specialite_ville(tour->tableau_ville[i-1]);
+    return get_specialite_ville(tour->tableau_ville[i]);
 }
 
 int ville_en_double(Gaule *tour, char *nom_ville){
@@ -165,6 +167,6 @@ int ville_en_double(Gaule *tour, char *nom_ville){
         if(compare_string(get_nom_ville(tour->tableau_ville[i]), nom_ville)==0)
             n_apparition++;
     }
-
+    
     return n_apparition>=2;
 }

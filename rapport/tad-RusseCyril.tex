@@ -435,10 +435,15 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
 \begin{enumerate}
     \item accesseurs
     \\Comme pour ville, certaines fonctions sont uniquement des accesseurs/setteurs 
-    et donc retourne une valeur d'une champ de Gaule. C'est notamment le cas des 
-    fonctions/procédures get\_nombre\_specialites, get\_est\_circuit, get\_nombre\_villes et
-    set\_nombre\_villes pour lesquelles je ne rentrerai donc pas dans les détails. 
-    \item ajoute\_ville
+    et donc retourne une valeur d'un champ de Gaule. C'est notamment le cas des 
+    fonctions/procédures : 
+    \begin{itemize}
+    \item \textbf{get\_nombre\_specialites} 
+    \item \textbf{get\_est\_circuit} 
+    \item \textbf{get\_nombre\_villes}
+    \item \textbf{set\_nombre\_villes}
+    \end{itemize}   
+    \item \textbf{ajoute\_ville}
     \\Cette fonction va s'occuper d'ajouter au tableau de villes, la ville donnée en argument 
     en s'assurant que celle-ci n'est pas la même que la dernière du tableau. Elle va également 
     s'occuper de mettre à jour certains champs de la structure Gaule(est\_circuit, nombre\_villes et 
@@ -450,7 +455,7 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
         \item SP4 : Mise à jour du nombre de spécialités et du champ de Gaule permettant de savoir 
         si le tour est un circuit ou non
     \end{itemize}
-    \item supprime\_ville
+    \item \textbf{supprime\_ville}
     \\A l'inverse de ajoute\_ville, cette procédure retire la dernière ville du tableau à
     qu'il ne soit pas vide.
     \begin{itemize}
@@ -458,13 +463,15 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
         \item SP2 : Realloue la mémoire du tableau afin d'en retirer la dernière ville
         \item SP3 : Mise à jour du champ de Gaule permettant de savoir si le tour est un circuit ou non
     \end{itemize}
-    \item compare\_string
+    \item \textbf{compare\_string}
     \\Cette fonction permet de savoir si les 2 chaines de caractères données en argument 
     sont les mêmes. Pour ce faire, on compare tous caractères un à un de la première chaine 
     avec ceux respectifs de la deuxième.
     Ce problème va donc parcourir au Maximum l'entièreté de la première chaine de caractères.
-    \\Spécifions pour ce problème $\forall s\in string, \exists i\in Entier, taille(s)=i, s[i-1]=0$
-    \begin{lstlisting}[caption = {Boucle pour comparer les 2 chaines de caractères}]
+    \\Voici le code étant solution de ce problème, agrémenté de son invariant de boucle.
+    Spécifions pour ce problème $\forall s\in string, \exists i\in Entier, taille(s)=i, s[i-1]=0$
+    \newpage 
+    \begin{lstlisting}[caption = {code comparaison de 2 chaines de caractères}]
     int i=0;
     (>\textcolor[HTML]{17983b}{\{$Inv: chaine1=chaine1_0\wedge chaine2=chaine2_0\wedge 0\leq i\leq length(chaine1)$\}}<)
     while(chaine1[i]!=0){
@@ -478,16 +485,88 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
         return -1;
     return 0;
     \end{lstlisting}
-    \item maj\_est\_circuit
+    \item \textbf{maj\_est\_circuit}
     \\Cette procédure redéfinit le booléen du champ est\_circuit de Gaule. Dans le cas où le tour contient
     au moins 3 villes, elle compare le nom de la première et dernière ville. Le tour est un circuit s'ils 
     correspondent.
-    \item get\_specialite
-    \\Cette fonction retourne la specialite de la ville dont le nom a été donné en argument. 
-    \begin{itemize}
-        \item 
-    \end{itemize}
+    \item \textbf{get\_specialite}
+    \\Cette fonction retourne la specialite de la ville dont le nom a été donné en argument. Pour se faire, 
+    la fonction parcours le tableau de villes et compare leur nom un à un avec le nom donné. Si la 
+    ville est trouvée dans le tour, on utilise l'accesseur créé à cet effet pour rendre la spécialité.
+    \\Voici le code étant solution de ce problème, agrémenté de son invariant de boucle.
+    \begin{lstlisting}[caption = {code boucle trouver ville correspondante}]
+    int i = 0;
+    (>\textcolor[HTML]{17983b}{\{$Inv: nom\_ville=nom\_ville_0\wedge 0\leq i\leq get\_nombre\_villes(tour)$\}}<)
+    for(; i<get_nombre_villes(tour) && ville_appartient_tour==0; i++){
+        (>\textcolor[HTML]{17983b}{\{$Inv\wedge B: nom\_ville=nom\_ville_0\wedge $}<)
+        (>\textcolor[HTML]{17983b}{$0\leq i< get\_nombre\_villes(tour)\wedge ville\_appartient\_tour=0$\}}<)
+        nom2 = get_nom_ville(tour->tableau_ville[i]);
+        if(!compare_string(nom_ville, nom2)){
+            ville_appartient_tour = 1;
+            /*décrémente i de 1 car sera à nouveau incrémenter en fin de 
+            boucle malgré que la boucle s'arrête dû à 
+            ville_appartient_tour=1, ainsi i sera bien l'indice du tableau 
+            où trouver la ville après la boucle*/
+            i--;
+        }
+    }    
+    (>\textcolor[HTML]{17983b}{\{$Inv\wedge \lnot B \implies nom\_ville=nom\_ville_0\wedge $}<)
+    (>\textcolor[HTML]{17983b}{$(i=get\_nombre\_villes(tour)\vee (ville\_appartient\_tour=1\wedge 0\leq i< get\_nombre\_villes(tour)))$\}}<)
+    \end{lstlisting}
+    \item \textbf{ville\_en\_double}
+    \\Cette fonction à pour objectif de définir si la ville donnée en argument apparait plus d'une fois 
+    ou non dans le tour. On parcourt alors le tableau de villes afin d'y dénombrer le nombre d'occurance
+    de la ville en question et enfin retourner un booléen correspondant.
+    \\Voici le code étant solution de ce problème, agrémenté de son invariant de boucle.
+    \begin{lstlisting}[caption = {code boucle nombre d'apparition d'une ville}]
+    int n_apparition = 0;
+    (>\textcolor[HTML]{17983b}{\{$Inv: nom\_ville=nom\_ville_0\wedge 0\leq i\leq get\_nombre\_villes(tour)\wedge $}<)
+    (>\textcolor[HTML]{17983b}{$n\_apparition\leq 2\}$}<)
+    for(int i = 0; i<get_nombre_villes(tour) && n_apparition<2 ; i++){
+    (>\textcolor[HTML]{17983b}{\{$Inv\wedge B: nom\_ville=nom\_ville_0\wedge 0\leq i< get\_nombre\_villes(tour)\wedge $}<)
+    (>\textcolor[HTML]{17983b}{$n\_apparition<2\}$}<)
+    if(compare_string(get_nom_ville(tour->tableau_ville[i]),nom_ville)==0)
+        n_apparition++;
+    } 
+    (>\textcolor[HTML]{17983b}{\{$Inv\wedge \lnot B\implies nom\_ville=nom\_ville_0\wedge (i=get\_nombre\_villes(tour)\vee $}<)
+    (>\textcolor[HTML]{17983b}{$n\_apparition=2\}$}<)    
+    \end{lstlisting}
+\end{enumerate}
 
+\subsubsection{Liste chainée}
+\begin{enumerate}
+    \item Accesseurs 
+    \\De même que pour l'implémentation sous forme de tableau, certaines fonctions/procédures
+    (précisées ci-dessous) ne requierent pas d'explications supplémentaires dû à leur simplicité. 
+    Elles sont d'ailleurs également toutes de complexité O(1).
+    \begin{itemize}
+        \item \textbf{set\_nombre\_villes}
+        \item \textbf{get\_nombre\_villes}
+        \item \textbf{get\_est\_circuit}
+        \item \textbf{get\_nombre\_specialites}
+    \end{itemize}
+    \item Allocation de mémoire
+    \\Quatre fonctions, s'occupe de l'allocation de mémoire des structures Gaule et 
+    \\Cellule\_Gaule. 
+    \begin{itemize}
+        \item \textbf{cree\_Cellule\_Gaule} : alloue de la mémoire pour une nouvelle cellule Cellule\_Gaule.
+        Si l'opération n'a pas échouée alors elle y intègre également les informations données en argument.
+        \item \textbf{detruit\_liste} : Cette fonction a pour but de libérer la mémoire des cellules 
+        de la liste. Dû à son fonctionnnement récurssif, elle permet de libérer toutes les cellules depuis celle donnnée 
+        en argument jusqu'à la dernière de la liste.
+        \\En effet : $\forall C \in Cellule\_Gaule$
+        \\detruit\_liste(C)=detruit\_liste(C$\rightarrow$cellule\_suivante)+free(C) 
+        \\si C$\rightarrow$cellule\_suivante$\ne$NULL
+        \\sinon detruit\_liste(C)=free(C)
+        \item \textbf{cree\_nouveau\_tour} : alloue de la mémoire pour un nouveau\_tour. Cette fonction 
+        fait également appel à cree\_Cellule\_Gaule avant d'intégrer les 2 premières villes du tour 
+        données en argument à la liste nouvellement créer et donc permettre d'initialiser les champs 
+        du nouveau tour lié à cette liste.
+        \item \textbf{detruit\_tour} : Libère la mémoire allouer à un struct Gaule donnée en argument. 
+        Elle y libère également la liste incluse à l'aide de la fonction créée à cet effet.
+    \end{itemize}
+    \item \textbf{ajoute\_ville}
+    
 \end{enumerate}
 
 
