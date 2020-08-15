@@ -26,7 +26,7 @@ static Cellule_Gaule *cree_Cellule_Gaule(Ville *ville, Cellule_Gaule *cellule_pr
 static void detruit_liste(Cellule_Gaule *cellule);
 
 static Cellule_Gaule *cree_Cellule_Gaule(Ville *ville, Cellule_Gaule *cellule_precedente, Cellule_Gaule *cellule_suivante){
-    assert(ville!=NULL && cellule_precedente!=NULL && cellule_suivante!=NULL);
+    assert(ville!=NULL);
 
     Cellule_Gaule *liste = malloc(sizeof(Cellule_Gaule));
     if(liste==NULL)
@@ -118,6 +118,7 @@ int ajoute_ville(Gaule *tour, Ville *ville){
         return -1;
     
     tour->derniere_cellule->cellule_suivante = nouvelle_cellule;
+    tour->derniere_cellule = nouvelle_cellule;
     
     //maj du nombre de spécialités
     if(get_specialite_ville(ville)!=NULL){
@@ -144,20 +145,18 @@ void supprime_ville(Gaule *tour){
     detruit_liste(tour->derniere_cellule);
     nouvelle_derniere_cellule->cellule_suivante = NULL;
     tour->derniere_cellule = nouvelle_derniere_cellule;
-
+    set_nombre_villes(tour, get_nombre_villes(tour)-1);
 
     maj_est_circuit(tour);
 }
 
 void maj_est_circuit(Gaule *tour){
     assert(tour!=NULL);
-
-    tour->est_circuit = 0;
-    if(tour-> nombre_villes<=2 || compare_string(get_nom_ville(tour->premiere_cellule->ville),get_nom_ville(tour->derniere_cellule->ville))!=0){
-         return;
+    tour->est_circuit=0;
+    if(get_nombre_villes(tour)>2 && compare_string(get_nom_ville(tour->premiere_cellule->ville),get_nom_ville(tour->derniere_cellule->ville))==0){
+        tour->est_circuit = 1;
+        return;
     }
-
-    tour->est_circuit = 1;
 }
 
 int get_est_circuit(Gaule *tour){
@@ -175,24 +174,26 @@ int get_nombre_specialites(Gaule *tour){
 char *get_specialite(Gaule *tour, char *nom_ville){
     assert(tour!=NULL && nom_ville!=NULL);
 
+
     Cellule_Gaule *recherche_cellule = tour->premiere_cellule;
-    while(compare_string(nom_ville, get_nom_ville(recherche_cellule->ville))!=0 || recherche_cellule->cellule_suivante==NULL){
+    while (recherche_cellule != NULL && compare_string(nom_ville, get_nom_ville(recherche_cellule->ville)) == -1){
         recherche_cellule = recherche_cellule->cellule_suivante;
     }
-    if(recherche_cellule==NULL)
+
+    if (recherche_cellule == NULL)
         return NULL;
-    
+
     return get_specialite_ville(recherche_cellule->ville);
 }
 
 int compare_string(char *chaine1, char *chaine2){
     int i=0;
-    while (chaine1[i]!=0) {
-        if (chaine2[i] == 0 || (chaine1[i] != chaine2[i]))
+    while (chaine1[i]!='\0'){
+        if (chaine1[i]!=chaine2[i])
             return -1;
         i++;
     }
-    if (chaine2[i-1]!=0)
+    if (chaine2[i]!='\0')
         return -1;
     return 0;
 }

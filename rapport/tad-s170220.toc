@@ -25,7 +25,9 @@
 \contentsline {subsection}{\numberline {5.1}Gaule - Tableau}{12}%
 \contentsline {subsection}{\numberline {5.2}\textbf {Gaule - Liste}}{13}%
 \contentsline {section}{\numberline {6}\textbf {Seatest}}{13}%
-\contentsline {section}{\numberline {7}\textbf {Avantage et Inconvénients entre liste et tableau}}{13}%
-\contentsline {paragraph}{}{13}%
-\contentsline {paragraph}{}{13}%
+\contentsline {subsection}{\numberline {6.1}\textbf {ajoute\_ville}}{13}%
+\contentsline {subsection}{\numberline {6.2}\textbf {get\_nombre\_villes}}{13}%
+\contentsline {section}{\numberline {7}\textbf {Avantage et Inconvénients entre liste et tableau}}{14}%
+\contentsline {paragraph}{}{14}%
+\contentsline {paragraph}{}{14}%
 \contentsline {paragraph}{}{14}%

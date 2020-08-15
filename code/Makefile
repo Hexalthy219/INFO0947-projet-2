@@ -14,12 +14,12 @@ LDFLAGS =
 
 # Files
 EXEC_TABLEAU = gaule_tableau_test
-MODULES_TABLEAU = ville.c gaule_tableau.c
-OBJECTS_TABLEAU = ville.o gaule_tableau.o
+MODULES_TABLEAU = gaule_tableau_test.c seatest.c ville.c gaule_tableau.c
+OBJECTS_TABLEAU = gaule_tableau_test.o seatest.o ville.o gaule_tableau.o
 
 EXEC_LISTE = gaule_liste_test
-MODULES_LISTE = ville.c gaule_liste.c
-OBJECTS_LISTE = ville.o gaule_liste.o
+MODULES_LISTE = gaule_liste_test.c seatest.c ville.c gaule_liste.c
+OBJECTS_LISTE = gaule_liste_test.o seatest.o ville.o gaule_liste.o
 
 EXEC = $(EXEC_TABLEAU) $(EXEC_LISTE)
 
@@ -33,6 +33,14 @@ test_array: $(OBJECTS_TABLEAU)
 test_list: $(OBJECTS_LISTE)
 	$(LD) -o $(EXEC_LISTE) $(OBJECTS_LISTE) $(LDFLAGS) -lm
 
+gaule_liste_test.o: gaule_liste_test.c
+	$(CC) -c gaule_liste_test.c -o gaule_liste_test.o $(CFLAGS)
+
+gaule_tableau_test.o: gaule_tableau_test.c
+	$(CC) -c gaule_tableau_test.c -o gaule_tableau_test.o $(CFLAGS)
+
+seatest.o: seatest.c
+	$(CC) -c seatest.c -o seatest.o $(CFLAGS)
 
 ville.o: ville.c
 	$(CC) -c ville.c -o ville.o $(CFLAGS)

@@ -484,14 +484,14 @@ il s'agit d'opérations mathématique ou d'allocation de mémoire très simple a
     \begin{lstlisting}[caption = {code comparaison de 2 chaines de caractères}]
     int i=0;
     (>\textcolor[HTML]{17983b}{\{$Inv: chaine1=chaine1_0\wedge chaine2=chaine2_0\wedge 0\leq i\leq length(chaine1)$\}}<)
-    while(chaine1[i]!=0){
+    while(chaine1[i]!='\0'){
         (>\textcolor[HTML]{17983b}{\{$Inv\wedge B: chaine1=chaine1_0\wedge chaine2=chaine2_0\wedge 0\leq i<length(chaine1)$\}}<)
-        if (chaine2[i]==0 || (chaine1[i]!=chaine2[i]))
+        if (chaine2[i]=='\0' || (chaine1[i]!=chaine2[i]))
             return -1;
         i++;
     }
     (>\textcolor[HTML]{17983b}{\{$Inv\wedge \lnot B \implies chaine1=chaine1_0\wedge chaine2=chaine2_0\wedge i=length(chaine1)$\}}<)
-    if(chaine2[i-1]!=0)
+    if(chaine2[i]!='\0')
         return -1;
     return 0;
     \end{lstlisting}
@@ -663,6 +663,21 @@ analysée ci-dessous.
 \end{itemize}
 
 \section{\textbf{Seatest}}
+
+\subsection{\textbf{ajoute\_ville}}
+Afin de vérifier le bon fonctionnement de la fonction "ajoute\_ville" étant donnné qu'il n'était pas 
+demandé de faire une fonction permettant d'accéder à une ville du tour, j'ai utilisé la fonction 
+get\_specialite. En effet, elle permet d'accéder au champ spécialité d'une ville du tour donnée en argument. 
+Ainsi, ce test permet donc de verifier que lorque l'on a ajouté une ville, si nous avons accès à un des champs, ici 
+spécialité, alors la ville a belle et bien été ajoutée au tour. Nous vérifions également que si la même ville que la première 
+est ajoutée alors le tour est considéré comme un circuit, prouvant une nouvelle fois le bon fonctionnement de ajoute\_ville.
+
+
+\subsection{\textbf{get\_nombre\_villes}}
+Ce test va vérifier différent cas de nombre de ville du tour et vérifier que la fonction 
+renvoit le nombre exact. Nous allons d'abords vérifier que la fonction renvoit bien la valeur 2 dans le cas 
+où nous venons de créer un tour. Enfin, nous ajoutons une ville puis la supprimons et des tests sont faits 
+vérifiant successivement que le nombre de villes est bien incrémenté puis décrémenté d'une unité.
 
 \section{\textbf{Avantage et Inconvénients entre liste et tableau}}
 Nous pouvons constater des différences notables entre les deux implémentations.

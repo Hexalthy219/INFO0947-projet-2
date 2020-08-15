@@ -78,12 +78,12 @@ int ajoute_ville(Gaule *tour, Ville *ville){
     if(tour==NULL)
         return -1;
 
+    tour->tableau_ville[get_nombre_villes(tour)-1] = ville;
 
     if(get_specialite_ville(tour->tableau_ville[get_nombre_villes(tour)-1])!=NULL){
         if(!ville_en_double(tour, nom))
             tour->nombre_specialites++;
     }
-
     maj_est_circuit(tour);
 
     return 0;
@@ -106,12 +106,12 @@ void supprime_ville(Gaule *tour){
 
 int compare_string(char *chaine1, char *chaine2){
     int i=0;
-    while(chaine1[i]!=0){
-        if (chaine2[i]==0 || (chaine1[i]!=chaine2[i]))
+    while(chaine1[i]!='\0'){
+        if (chaine2[i]=='\0' || (chaine1[i]!=chaine2[i]))
             return -1;
         i++;
     }
-    if(chaine2[i-1]!=0)
+    if(chaine2[i]!='\0')
         return -1;
     return 0;
 }
@@ -144,6 +144,7 @@ char *get_specialite(Gaule *tour, char *nom_ville){
 
     char *nom2;
     int ville_appartient_tour = 0, i = 0;
+
     
     //Vérifie que le nom donné correspond à une des villes du tour
     for(; i<get_nombre_villes(tour) && ville_appartient_tour==0; i++){
